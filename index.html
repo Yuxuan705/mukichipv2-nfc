@@ -198,10 +198,10 @@
       word-break: break-word;
     }
 
-    /* 5. Instagram 按钮 */
+    /* 5. Instagram 按钮（位置往调下） */
     .ig-badge-link {
       position: absolute;
-      bottom: -30px;
+      bottom: -45px; /* 从 -30px 调整至 -45px，让按钮靠下 */
       right: -10px;
       text-decoration: none;
       z-index: 10;
@@ -260,8 +260,8 @@
       <div class="quest-header-title">- QUEST -</div>
       
       <div class="quest-content-area" id="questContentArea">
-        <p class="zh-text" id="zhDisplay">搭一程公交车，在一个安全、方便的站点下车，探索附近 10 分钟。</p>
-        <p class="en-text" id="enDisplay">Take a bus, get off at a safe and convenient stop, and explore nearby for 10 minutes.</p>
+        <p class="zh-text" id="zhDisplay">在安全的公共区域选一个方向走 5 分钟，再按原路或熟悉路线回来。</p>
+        <p class="en-text" id="enDisplay">Walk in one direction for 5 minutes within a safe public area, then return via the same path or a familiar route.</p>
       </div>
 
       <!-- 5. 右下角 Instagram 图片按钮 -->
@@ -274,215 +274,39 @@
 
   <script>
     /* ========================================================
-       QUEST 任务数据池 (包含 100 个 Mini + 100 个 Inner)
+       QUEST 任务数据池
        ======================================================== */
     
-    // 1. Mini Adventure 户外/探索类 (1-100)
+    // 1. Mini Adventure 户外/探索类
     const miniQuests = [
-      { zh: "搭一程公交车，在一个安全、方便的站点下车，探索附近 10 分钟。", en: "Take a bus, get off at a safe and convenient stop, and explore nearby for 10 minutes." },
-      { zh: "去最近的公园坐 20 分钟，观察周围发生的事。", en: "Sit in the nearest park for 20 minutes and observe what happens around you." },
-      { zh: "找一家从没进去过的本地小店，看看里面有什么。", en: "Find a local shop you’ve never been into and see what’s inside." },
-      { zh: "走一条平时不会选择、但安全又方便的街道。", en: "Walk down a safe and convenient street you don't usually choose." },
-      { zh: "去书店逛 15 分钟，挑一本最吸引你的书读简介。", en: "Browse a bookstore for 15 minutes and read the blurb of a book that catches your eye." },
-      { zh: "到附近的咖啡店坐一会儿，观察它的空间设计。", en: "Sit in a nearby café for a while and observe its spatial design." },
-      { zh: "去市集找一种你没见过或没尝过的食物。", en: "Go to a market and find a food you have never seen or tasted before." },
-      { zh: "找一面附近的壁画或公共艺术，认真看 5 分钟。", en: "Find a nearby mural or public art piece and look at it carefully for 5 minutes." },
-      { zh: "到花店看看今天有哪些花，不一定要买。", en: "Visit a florist to see what flowers are available today—no need to buy." },
-      { zh: "探索你常去的商场里一个从没认真逛过的楼层。", en: "Explore a floor in your usual mall that you've never spent time on." },
-      { zh: "找一条有树荫的路线，慢慢走 15 分钟。", en: "Find a shaded path and walk slowly for 15 minutes." },
-      { zh: "去附近的面包店，选一种你平常不会买的面包。", en: "Go to a bakery nearby and choose a bread you wouldn't normally buy." },
-      { zh: "找一个可以安全看天空的地方，待上 10 分钟。", en: "Find a safe spot to watch the sky and stay there for 10 minutes." },
-      { zh: "去一家二手店，寻找最奇怪的一件商品。", en: "Visit a thrift store and search for the most peculiar item." },
-      { zh: "到附近的图书馆或公共阅读空间待 20 分钟。", en: "Spend 20 minutes in a nearby library or public reading space." },
-      { zh: "去一间文具店，找一件能激发创作灵感的小东西。", en: "Go to a stationery store and find a small item that inspires creativity." },
-      { zh: "走到附近一条街的尽头，再用另一条安全路线回来。", en: "Walk to the end of a nearby street, then return via another safe route." },
-      { zh: "找一个有户外座位的地方，坐下来观察城市。", en: "Find a spot with outdoor seating and sit down to watch the city." },
-      { zh: "去附近的早餐店看菜单，记下一道想尝试的食物。", en: "Check the menu at a nearby breakfast spot and note something you'd like to try." },
-      { zh: "在熟悉的商场里找一家你从未注意过的小店。", en: "Find a small shop in a familiar mall that you've never noticed before." },
-      { zh: "到附近的水景旁坐一会儿，看看水面如何变化。", en: "Sit by a nearby water feature and watch how the water changes." },
-      { zh: "找一座有趣的建筑，从外面观察它的形状和细节。", en: "Find an interesting building and observe its shape and details from outside." },
-      { zh: "在社区里探索一条你叫不出名字的街道。", en: "Explore a street in your neighborhood whose name you don't know." },
-      { zh: "去一家本地甜品店，尝试一份预算内的小点心。", en: "Go to a local dessert shop and try a small treat within your budget." },
-      { zh: "找一个公共长椅，坐 10 分钟，不急着看手机。", en: "Find a public bench, sit for 10 minutes, and don't rush to check your phone." },
-      { zh: "去附近的超市，发现一种没买过的食材。", en: "Go to a nearby supermarket and discover an ingredient you've never bought." },
-      { zh: "找一家独立经营的小店，记下它的名字。", en: "Find an independent small store and note down its name." },
-      { zh: "去附近的公园，寻找一棵你特别喜欢的树。", en: "Go to a nearby park and find a tree that you particularly like." },
-      { zh: "走到一个平时会开车经过、但没停下来过的公共地点。", en: "Walk to a public place you usually drive past but have never stopped at." },
-      { zh: "去附近的美食中心看看三个没试过的摊位。", en: "Visit a nearby hawker center/food court and check out three untried stalls." },
-      { zh: "找一个可以看日落的安全地点，提前一点到达。", en: "Find a safe spot to watch the sunset and arrive a little early." },
-      { zh: "在白天探索一个新的社区街区，规划好返程路线。", en: "Explore a new neighborhood during the day with a planned return route." },
-      { zh: "去附近的宠物友好公共区域看看动物，但不打扰它们。", en: "Visit a pet-friendly public area to watch animals without disturbing them." },
-      { zh: "找一家古着店，看看有没有让你眼前一亮的单品。", en: "Check out a vintage store and see if an item catches your eye." },
-      { zh: "去公共市场看看当地人平常买些什么。", en: "Go to a public wet market to see what locals usually buy." },
-      { zh: "找一个安静的公共空间，带一本书坐 15 分钟。", en: "Find a quiet public space, bring a book, and sit for 15 minutes." },
-      { zh: "在社区里找一条绿植特别多的步道，散步一圈。", en: "Find a lush green walkway in your neighborhood and take a stroll." },
-      { zh: "去一间你经常路过却没进去过的餐馆看菜单。", en: "Check the menu of a restaurant you often pass by but have never entered." },
-      { zh: "找一个有特色招牌的街区，拍下三块喜欢的招牌。", en: "Find a street with unique signs and take photos of three you like." },
-      { zh: "在商场里寻找一处你以前没发现的休息角落。", en: "Look for a resting corner in a mall that you haven't noticed before." },
-      { zh: "去附近的邮局或邮筒看看，想想上次寄信是什么时候。", en: "Look at a nearby post office or mailbox and recall when you last sent a letter." },
-      { zh: "探索一处公共艺术作品，找出三个有趣的细节。", en: "Explore a public artwork and spot three interesting details." },
-      { zh: "选一家本地饮料店，点一杯预算内的新口味。", en: "Choose a local drink shop and order a new flavor within your budget." },
-      { zh: "找一条安全的路线，步行去一个平常会搭车去的近处。", en: "Walk along a safe route to a nearby destination you usually drive/ride to." },
-      { zh: "去花园或公园观察不同植物的叶子。", en: "Go to a garden or park to observe leaves of different plants." },
-      { zh: "到附近的社区广场坐 10 分钟，感受周围的节奏。", en: "Sit in a nearby community plaza for 10 minutes to feel the local rhythm." },
-      { zh: "找一家有趣的餐厅，研究它的菜单排版与命名。", en: "Find an interesting restaurant and study its menu layout and naming." },
-      { zh: "去附近的杂货店，看看有没有童年吃过的零食。", en: "Visit a nearby grocery store to see if there are snacks from your childhood." },
-      { zh: "找一间有窗边座位的店，观察窗外 10 分钟。", en: "Find a shop with a window seat and observe outside for 10 minutes." },
-      { zh: "去附近的景点或地标，像游客一样重新认识它。", en: "Visit a nearby attraction or landmark and rediscover it like a tourist." },
-      { zh: "做一次 20 分钟的城市摄影散步，只拍建筑细节。", en: "Take a 20-minute urban photo walk focusing solely on architectural details." },
-      { zh: "到附近找一家没去过的早餐店，看看它的招牌菜。", en: "Find an untried breakfast spot nearby and check its signature dishes." },
-      { zh: "在公共交通可达的地方下车，探索一个新的商圈。", en: "Get off at an accessible public transit stop and explore a new area." },
-      { zh: "找一处能看到城市天际线的地方，待 10 分钟。", en: "Find a place with a view of the city skyline and stay for 10 minutes." },
-      { zh: "去一家小型画廊、展览或文化空间看看（若有开放）。", en: "Visit a small gallery, exhibition, or cultural space if open." },
-      { zh: "到超市选择一种陌生水果，了解它的名字或产地。", en: "Pick an unfamiliar fruit at the supermarket and learn its name or origin." },
-      { zh: "找一家本地餐馆，尝试一种你平常不会点的配菜。", en: "Visit a local restaurant and try a side dish you wouldn't normally order." },
-      { zh: "到附近的公园走一圈，不听音乐，只听环境声音。", en: "Walk around a nearby park without music, listening only to ambient sounds." },
-      { zh: "找一个有遮蔽的地方观察天气变化 10 分钟。", en: "Find a sheltered spot and observe the changing weather for 10 minutes." },
-      { zh: "探索一个你一直说想去、却没去过的附近公共地点。", en: "Explore a nearby public place you've always said you wanted to visit." },
-      { zh: "去一家陶艺、手作或艺术材料店看看创作工具。", en: "Visit a pottery, craft, or art supply store to look at creative tools." },
-      { zh: "在社区里寻找三家小店，并记下它们各自的特色。", en: "Find three small shops in your community and note their unique features." },
-      { zh: "找一个适合坐着发呆的地方，停留 15 分钟。", en: "Find a nice place to sit and daydream, staying for 15 minutes." },
-      { zh: "去一家本地书店，寻找封面最奇怪的一本书。", en: "Go to a local bookstore and search for the book with the weirdest cover." },
-      { zh: "到附近市场找一种没见过的香料或食材。", en: "Go to a nearby market and find an unfamiliar spice or ingredient." },
-      { zh: "在公园里选一条不同的路线走回入口。", en: "Choose a different path in the park to walk back to the entrance." },
-      { zh: "找一处公共建筑，观察它的门、窗和入口设计。", en: "Find a public building and observe its door, window, and entrance designs." },
-      { zh: "去附近的购物中心，找一家你从没尝试过的餐饮摊位。", en: "Go to a nearby mall and find a food stall you've never tried." },
-      { zh: "做一次主题散步：沿路只寻找门的设计。", en: "Take a themed walk: look only for door designs along the way." },
-      { zh: "做一次主题散步：沿路只寻找不同的窗户。", en: "Take a themed walk: look only for different windows along the way." },
-      { zh: "做一次主题散步：沿路只寻找有趣的影子。", en: "Take a themed walk: look only for interesting shadows along the way." },
-      { zh: "找一家二手书店，翻看一本你平时不会选的书。", en: "Find a secondhand bookstore and flip through a book you wouldn't normally pick." },
-      { zh: "去附近的咖啡馆坐 20 分钟，写下空间里五个细节。", en: "Sit in a nearby café for 20 minutes and write down five details of the space." },
-      { zh: "在预算内买一份小零食，去公园慢慢享用。", en: "Buy a small snack within your budget and enjoy it slowly in a park." },
-      { zh: "找一个公共观景点，观察城市的远近层次。", en: "Find a public viewpoint and observe the layers and depth of the city." },
-      { zh: "去一间本地超市或杂货店，看看一种新食材可以怎么料理。", en: "Visit a local supermarket and look up how to cook a new ingredient." },
-      { zh: "去附近的公共球场或运动场看一会儿大家活动。", en: "Go to a nearby public court or sports field and watch people play." },
-      { zh: "探索一个新的室内公共空间，找出最安静的角落。", en: "Explore a new indoor public space and find its quietest corner." },
-      { zh: "去一家本地餐厅，看看菜单里最有趣的菜名。", en: "Go to a local restaurant and look for the most interesting dish name on the menu." },
-      { zh: "找一个你平时匆匆经过的路口，白天安全地观察 5 分钟。", en: "Find an intersection you usually rush past and safely observe for 5 minutes." },
-      { zh: "沿着有行人道的路线多走 500 步，再折返回来。", en: "Walk an extra 500 steps along a pedestrian path before heading back." },
-      { zh: "去一家本地小店，挑一件最有趣的包装看一看。", en: "Visit a local shop and check out the item with the most interesting packaging." },
-      { zh: "找一个可以看见树木和建筑同框的地方，拍张照片。", en: "Find a spot where trees and buildings frame together and take a photo." },
-      { zh: "去附近的花园或绿地，观察昆虫但保持距离。", en: "Visit a garden or green space to observe insects while keeping your distance." },
-      { zh: "在附近找一个适合阅读的公共座位，读 10 页书。", en: "Find a public seat suitable for reading nearby and read 10 pages of a book." },
-      { zh: "去一间没去过的饮料店，先研究它的菜单再决定是否购买。", en: "Go to a new drink shop, study its menu carefully before deciding to buy." },
-      { zh: "在白天去一个新的商场或商业区，探索 20 分钟。", en: "Visit a new mall or commercial area during the day and explore for 20 minutes." },
-      { zh: "找一个附近的纪念品或手工艺店，了解当地特色。", en: "Find a nearby souvenir or craft shop to learn about local culture." },
-      { zh: "去附近的社区市场，寻找一种颜色最鲜艳的商品。", en: "Go to a local neighborhood market and find the most vibrantly colored item." },
-      { zh: "选一个熟悉的目的地，尝试一条不同且安全的返程路线。", en: "Pick a familiar destination and try a different, safe return route." },
-      { zh: "到一个公共空间，找出三种不同的座椅设计。", en: "Go to a public space and find three different seating designs." },
-      { zh: "去附近找一间有趣的甜品店，给它的招牌甜点打个想象分数。", en: "Find a dessert shop nearby and give its signature dessert an imaginary rating." },
-      { zh: "找一条有很多店铺的街，选出最吸引你的门面。", en: "Find a street with many shops and choose the storefront that attracts you most." },
-      { zh: "到公园里选一个位置，观察同一片天空 10 分钟。", en: "Pick a spot in the park and watch the same patch of sky for 10 minutes." },
-      { zh: "去附近找一家宠物用品店，看看有哪些有趣的小物件。", en: "Go to a pet supply store nearby and look at interesting small pet gadgets." },
-      { zh: "找一个公共空间，观察人们如何使用它，不拍摄陌生人。", en: "Observe how people use a public space without photographing strangers." },
-      { zh: "在附近的本地市场找一件你没见过的日常用品。", en: "Find an unfamiliar daily necessity item at a nearby local market." },
-      { zh: "做一趟 30 分钟的微型城市探索，结束时记下最意外的发现。", en: "Do a 30-minute mini urban exploration and note your most surprising finding." },
-      { zh: "找一家有特色的本地小店，给自己一个理由下次再来。", en: "Find a unique local shop and give yourself a reason to visit again next time." },
-      { zh: "去一个平时只在车里经过的地方，在安全的公共区域停留 10 分钟。", en: "Go to a place you usually only drive past and stay in a safe public area for 10 minutes." }
+      {
+        zh: "在安全的公共区域选一个方向走 5 分钟，再按原路或熟悉路线回来。",
+        en: "Walk in one direction for 5 minutes within a safe public area, then return via the same path or a familiar route."
+      },
+      {
+        zh: "去最近的便利店盲买一瓶你从没喝过的饮料。",
+        en: "Go to the nearest convenience store and randomly buy a drink you have never tried before."
+      },
+      {
+        zh: "寻找一条马路上带有“小动物”或“植物”图案的盖板，拍照记录。",
+        en: "Find a manhole cover or sign with an animal or plant design on the street and take a picture."
+      }
     ];
 
-    // 2. Inner Quest 内心/治愈类 (1-100)
+    // 2. Inner Quest 内心/治愈类
     const innerQuests = [
-      { zh: "写下最近真正让你感到开心的一件小事。", en: "Write down one small thing that recently made you genuinely happy." },
-      { zh: "问自己：我现在需要的是休息、陪伴，还是一点新鲜感？", en: "Ask yourself: Do I need rest, company, or a bit of novelty right now?" },
-      { zh: "回想最近一次觉得自己很自由的时刻。", en: "Recall a recent moment when you felt truly free." },
-      { zh: "写下一个你一直想尝试、却迟迟没开始的兴趣。", en: "Write down an interest you've always wanted to try but haven't started yet." },
-      { zh: "列出三件你喜欢、但不需要擅长的事。", en: "List three things you love doing, even if you're not good at them." },
-      { zh: "给现在的自己写一封只有三句话的信。", en: "Write a short letter to your present self in just three sentences." },
-      { zh: "想想最近有什么事其实不必急着解决。", en: "Think about something recently that doesn't actually need to be rushed." },
-      { zh: "写下一个你想停止勉强自己的地方。", en: "Write down an area where you want to stop forcing yourself." },
-      { zh: "问自己：如果没有人评价，我会想尝试什么？", en: "Ask yourself: If no one were judging, what would I want to try?" },
-      { zh: "记下最近让你感到好奇的一个问题。", en: "Note down a question that recently sparked your curiosity." },
-      { zh: "写下一个你最近做得不错的小决定。", en: "Write down a good small decision you made recently." },
-      { zh: "列出三件不花钱也能让你开心的事。", en: "List three things that bring you joy without spending money." },
-      { zh: "回想最近一次真心大笑是什么时候。", en: "Recall when you last laughed truly from the heart." },
-      { zh: "写下你希望未来的自己记得的一个普通瞬间。", en: "Write down an ordinary moment you hope your future self remembers." },
-      { zh: "问自己：什么样的休息最适合现在的我？", en: "Ask yourself: What kind of rest suits me best right now?" },
-      { zh: "写下一个你愿意慢慢学习、不急着精通的技能。", en: "Write down a skill you're happy to learn slowly without rushing to master." },
-      { zh: "想想最近哪一刻最像真正的自己。", en: "Think about which recent moment felt most like your true self." },
-      { zh: "给最近的自己一句真实但不鸡汤的鼓励。", en: "Give your recent self a honest, non-cliché encouragement." },
-      { zh: "列出三个你现在拥有的选择。", en: "List three choices that you currently have." },
-      { zh: "写下一个你想守住的个人界限。", en: "Write down a personal boundary you want to maintain." },
-      { zh: "问自己：最近我最想从生活里增加什么？", en: "Ask yourself: What would I most like to add to my life lately?" },
-      { zh: "记录一件你最近学会的小事。", en: "Record a small thing you learned recently." },
-      { zh: "想想最近有什么决定是出于自己的意愿。", en: "Think of a recent decision you made purely out of your own genuine desire." },
-      { zh: "写下一个你可以暂时放下的期待。", en: "Write down an expectation you can temporarily put down." },
-      { zh: "回忆一个让你感到被理解的时刻。", en: "Recall a moment when you felt genuinely understood." },
-      { zh: "想想你最近忽略了自己的哪个需求。", en: "Think about a personal need you've neglected recently." },
-      { zh: "给未来一周的自己留一条提醒。", en: "Leave a gentle reminder for yourself for the coming week." },
-      { zh: "写下一个你不再需要向别人证明的事情。", en: "Write down something you no longer need to prove to others." },
-      { zh: "问自己：今天有没有给自己留一点空间？", en: "Ask yourself: Have I left some space for myself today?" },
-      { zh: "列出一个想减少的习惯和一个想增加的习惯。", en: "List one habit you want to reduce and one you want to build." },
-      { zh: "想想最近一次勇敢说出真实想法的时刻。", en: "Recall a recent moment when you bravely voiced your true thoughts." },
-      { zh: "记录一件让你重新产生好奇心的事。", en: "Record something that reignited your curiosity recently." },
-      { zh: "写下一个你可以对自己更宽容的地方。", en: "Write down an area where you can be more forgiving toward yourself." },
-      { zh: "想想如果今天只完成一件事，什么最值得？", en: "Think: If you could accomplish only one thing today, what's most worthwhile?" },
-      { zh: "写下一个你想重拾的小兴趣。", en: "Write down a small hobby you'd love to pick back up." },
-      { zh: "问自己：什么事情会让我恢复一点精神？", en: "Ask yourself: What activity would help restore my energy a little?" },
-      { zh: "给过去的自己写一句话，不责备，只理解。", en: "Write a sentence to your past self—no blame, only understanding." },
-      { zh: "列出三个你欣赏自己的特质，不必宏大。", en: "List three traits you appreciate about yourself, big or small." },
-      { zh: "记录今天一个让你感到有掌控感的选择。", en: "Record a choice today that gave you a sense of control." },
-      { zh: "写下你最近想了解的一个关于自己的问题。", en: "Write down a question about yourself you'd like to explore." },
-      { zh: "想想你最自在的时候，通常身处什么环境？", en: "Think: What environment are you usually in when you feel most at ease?" },
-      { zh: "写下一个你愿意慢慢来、不必赶进度的目标。", en: "Write down a goal you're willing to take slow without rushing." },
-      { zh: "问自己：我最近是在期待什么，还是在逃避什么？", en: "Ask yourself: Am I looking forward to something, or avoiding something lately?" },
-      { zh: "列出三件你想感谢自己的小事。", en: "List three small things you want to thank yourself for." },
-      { zh: "想想最近一次感到满足的时刻，是什么让它特别？", en: "Recall a recent moment of contentment—what made it special?" },
-      { zh: "写下一个你想给自己更多许可去做的事。", en: "Write down something you want to give yourself permission to do." },
-      { zh: "给今天的情绪取一个天气名称，并说明原因。", en: "Name today's mood after a weather type and explain why." },
-      { zh: "写下你现在最想听到的一句话。", en: "Write down the sentence you most wish to hear right now." },
-      { zh: "想想哪种活动会让你忘记看时间。", en: "Think about an activity that makes you completely lose track of time." },
-      { zh: "问自己：我想做这件事，是因为喜欢，还是因为应该？", en: "Ask yourself: Do I want to do this because I like it, or because I 'should'?" },
-      { zh: "列出你想多花时间的三件事。", en: "List three things you would love to spend more time on." },
-      { zh: "回想一个你曾经克服的小困难。", en: "Recall a small challenge you successfully overcame in the past." },
-      { zh: "写下一个你希望自己少一点在意的评价。", en: "Write down an opinion or judgment you wish to care less about." },
-      { zh: "想想最近让你心生羡慕的事，它代表什么愿望？", en: "Think about what recently made you envious—what wish does it reveal?" },
-      { zh: "记录一件你以前不喜欢、现在却理解了的事。", en: "Record something you used to dislike but now understand." },
-      { zh: "问自己：如果今天不需要有效率，我想怎么过？", en: "Ask yourself: If I didn't need to be productive today, how would I spend it?" },
-      { zh: "写下一个最近让你感到安心的地方。", en: "Write down a place that recently gave you a sense of comfort." },
-      { zh: "给自己五分钟，允许暂时没有答案。", en: "Give yourself five minutes to simply allow having no answers." },
-      { zh: "想想你最想保护的生活节奏是什么样的。", en: "Think about the life rhythm you most want to protect." },
-      { zh: "列出三件你希望未来一个月体验的事情。", en: "List three experiences you hope to have in the next month." },
-      { zh: "写下一个你可以用很小的步骤开始的愿望。", en: "Write down a wish you can start with a very tiny first step." },
-      { zh: "问自己：我什么时候最容易忘记做自己？", en: "Ask yourself: When do I find it easiest to forget being myself?" },
-      { zh: "记录一个你最近改变看法的事情。", en: "Record something you recently changed your perspective on." },
-      { zh: "想想你希望别人理解你哪一个不太明显的面向。", en: "Think about a subtle side of yourself you wish others understood." },
-      { zh: "写下一个你愿意向别人求助的小事情。", en: "Write down a small thing you'd be willing to ask for help with." },
-      { zh: "回想一个让你感到骄傲、但很少提起的时刻。", en: "Recall a moment you feel proud of, though you rarely mention it." },
-      { zh: "列出三个你想保留的生活习惯。", en: "List three habits in your life that you want to keep." },
-      { zh: "问自己：我现在是在需要答案，还是只需要时间？", en: "Ask yourself: Do I need an answer right now, or just time?" },
-      { zh: "写下一个你想对未来的自己保持开放的可能性。", en: "Write down a possibility you want to stay open to for your future self." },
-      { zh: "想想你最近一次真正放松是什么时候。", en: "Think about when you last felt truly relaxed." },
-      { zh: "记录一个你想再体验一次的平凡瞬间。", en: "Record an ordinary moment you would love to experience again." },
-      { zh: "给今天写一个标题，像给日记命名一样。", en: "Give today a title, as if naming a diary entry." },
-      { zh: "想想如果不和别人比较，你会怎样评价最近的自己？", en: "Think: Without comparing to others, how would you evaluate yourself recently?" },
-      { zh: "写下一个你可以不完美地开始的事情。", en: "Write down something you are willing to start imperfectly." },
-      { zh: "问自己：我现在的生活里，什么值得保留？", en: "Ask yourself: In my current life, what is worth keeping?" },
-      { zh: "列出三件你想尝试、但可以随时改变主意的事。", en: "List three things you'd like to try, but can change your mind about anytime." },
-      { zh: "写下一个你不必今天就决定的问题。", en: "Write down a question you don't need to decide on today." },
-      { zh: "想想最近有什么事让你感到更接近理想的生活。", en: "Think of a recent moment that felt closer to your ideal life." },
-      { zh: "记录一个你最近对自己产生的新发现。", en: "Record a new discovery you made about yourself recently." },
-      { zh: "给自己设计一个不以成绩衡量的个人成就。", en: "Design a personal achievement for yourself that isn't measured by performance." },
-      { zh: "问自己：我真正想要的是结果，还是过程中的感受？", en: "Ask yourself: Do I truly want the outcome, or the feeling during the process?" },
-      { zh: "写下一个你愿意重新认识的旧爱好。", en: "Write down an old hobby you're open to rediscovering." },
-      { zh: "想想你希望自己的普通星期天是什么样子。", en: "Picture what your ideal, ordinary Sunday looks like." },
-      { zh: "列出三件你做起来很自然、却值得珍惜的事。", en: "List three things that come naturally to you yet are worth cherishing." },
-      { zh: "写下一个你想减少的自我批评。", en: "Write down a piece of self-criticism you want to reduce." },
-      { zh: "问自己：我有没有把别人的时间表当成自己的？", en: "Ask yourself: Have I been adopting someone else's timeline as my own?" },
-      { zh: "回想一个你曾经很在意、现在已经放下的事。", en: "Recall something you used to care deeply about but have now let go." },
-      { zh: "记录一个你想感谢但还没表达的人或时刻。", en: "Record a person or moment you wish to thank but haven't expressed yet." },
-      { zh: "写下一个你希望生活多一点的感受。", en: "Write down a feeling you wish to experience more of in life." },
-      { zh: "想想你最想为自己腾出时间的事情是什么。", en: "Think about the thing you most want to make time for." },
-      { zh: "给自己一句允许：今天可以不做到什么？", en: "Give yourself permission: What is it okay not to accomplish today?" },
-      { zh: "写下一个你想更坦诚面对的愿望。", en: "Write down a wish you want to be more honest about." },
-      { zh: "问自己：最近什么事情让我感到有活力？", en: "Ask yourself: What has been making me feel energetic lately?" },
-      { zh: "记录一件你今天愿意认可自己的小事。", en: "Record one small thing you are willing to give yourself credit for today." },
-      { zh: "想想如果把生活当作探索，而不是考试，会有什么不同？", en: "Think: What would change if you treated life as an exploration rather than a test?" },
-      { zh: "写下你想带进下一周的一种心态。", en: "Write down a mindset you'd like to carry into the coming week." },
-      { zh: "给今天的自己一个温柔但具体的小建议。", en: "Give your present self a gentle yet concrete piece of advice." },
-      { zh: "问自己：此刻有什么值得我好奇，而不是急着评判？", en: "Ask yourself: What is worth being curious about right now, rather than judging?" },
-      { zh: "写下一件你想继续探索、暂时不必下结论的事。", en: "Write down something you'd like to keep exploring without rushing to conclude." },
-      { zh: "回想最近一次你说了真心话的时刻，你有什么感受？", en: "Recall the last time you spoke your heart out—how did you feel?" }
+      {
+        zh: "闭上眼睛深呼吸 5 次，在心中对自己说一句“你今天做得很好”。",
+        en: "Close your eyes, take 5 deep breaths, and tell yourself silently: 'You did great today.'"
+      },
+      {
+        zh: "给一位很久没联系的好朋友发一条“突然想起你，祝你今天开心”。",
+        en: "Send a quick message to a friend you haven't talked to in a while: 'Thinking of you, hope you have a great day!'"
+      },
+      {
+        zh: "在备忘录里写下今天让你感到幸运或感谢的 3 件微小事物。",
+        en: "Write down 3 tiny things in your notes that you felt lucky or grateful for today."
+      }
     ];
 
     /* ========================================================
@@ -500,7 +324,7 @@
       } else if (type === 'inner') {
         pool = innerQuests;
       } else {
-        // Random Quest: 混合 Mini 与 Inner (共 200 项)
+        // Random Quest: 混合 Mini 与 Inner
         pool = [...miniQuests, ...innerQuests];
       }
 
