@@ -118,7 +118,7 @@
     }
 
     .quest-btn:active {
-      transform: scale(0.8); /* 按下变小 20% */
+      transform: scale(0.8);
     }
 
     /* PNG 图标 */
@@ -136,7 +136,7 @@
       font-size: 12px;
       color: var(--main-color);
       text-align: center;
-      letter-spacing: 0.05em; /* 字体间距 +50 */
+      letter-spacing: 0.05em;
       line-height: 1.25;
       text-transform: uppercase;
     }
@@ -156,7 +156,7 @@
       font-family: 'Bagel Fat One', cursive, sans-serif;
       font-size: 22px;
       color: var(--main-color);
-      letter-spacing: 0.05em; /* 字体间距 +50 */
+      letter-spacing: 0.05em;
       white-space: nowrap;
       margin-bottom: 20px;
     }
@@ -198,11 +198,11 @@
       word-break: break-word;
     }
 
-    /* 5. Instagram 按钮（位置往调下） */
+    /* 5. Instagram 按钮（位置微调：往下 & 往右） */
     .ig-badge-link {
       position: absolute;
-      bottom: -45px; /* 从 -30px 调整至 -45px，让按钮靠下 */
-      right: -10px;
+      bottom: -40px; /* 从 -30px 调至 -40px，下移 */
+      right: -20px;  /* 从 -10px 调至 -20px，右移 */
       text-decoration: none;
       z-index: 10;
       transition: transform 0.15s ease;
@@ -277,86 +277,4 @@
        QUEST 任务数据池
        ======================================================== */
     
-    // 1. Mini Adventure 户外/探索类
-    const miniQuests = [
-      {
-        zh: "在安全的公共区域选一个方向走 5 分钟，再按原路或熟悉路线回来。",
-        en: "Walk in one direction for 5 minutes within a safe public area, then return via the same path or a familiar route."
-      },
-      {
-        zh: "去最近的便利店盲买一瓶你从没喝过的饮料。",
-        en: "Go to the nearest convenience store and randomly buy a drink you have never tried before."
-      },
-      {
-        zh: "寻找一条马路上带有“小动物”或“植物”图案的盖板，拍照记录。",
-        en: "Find a manhole cover or sign with an animal or plant design on the street and take a picture."
-      }
-    ];
-
-    // 2. Inner Quest 内心/治愈类
-    const innerQuests = [
-      {
-        zh: "闭上眼睛深呼吸 5 次，在心中对自己说一句“你今天做得很好”。",
-        en: "Close your eyes, take 5 deep breaths, and tell yourself silently: 'You did great today.'"
-      },
-      {
-        zh: "给一位很久没联系的好朋友发一条“突然想起你，祝你今天开心”。",
-        en: "Send a quick message to a friend you haven't talked to in a while: 'Thinking of you, hope you have a great day!'"
-      },
-      {
-        zh: "在备忘录里写下今天让你感到幸运或感谢的 3 件微小事物。",
-        en: "Write down 3 tiny things in your notes that you felt lucky or grateful for today."
-      }
-    ];
-
-    /* ========================================================
-       2 秒滚轮抽签逻辑
-       ======================================================== */
-    let isRolling = false;
-
-    function selectQuest(type) {
-      if (isRolling) return;
-      isRolling = true;
-
-      let pool = [];
-      if (type === 'mini') {
-        pool = miniQuests;
-      } else if (type === 'inner') {
-        pool = innerQuests;
-      } else {
-        // Random Quest: 混合 Mini 与 Inner
-        pool = [...miniQuests, ...innerQuests];
-      }
-
-      const contentArea = document.getElementById('questContentArea');
-      const zhDisplay = document.getElementById('zhDisplay');
-      const enDisplay = document.getElementById('enDisplay');
-
-      contentArea.classList.add('rolling');
-
-      const duration = 2000;    // 2秒
-      const intervalTime = 60;  // 60ms 快速轮播
-      let elapsedTime = 0;
-
-      const timer = setInterval(() => {
-        const tempIndex = Math.floor(Math.random() * pool.length);
-        zhDisplay.textContent = pool[tempIndex].zh;
-        enDisplay.textContent = pool[tempIndex].en;
-
-        elapsedTime += intervalTime;
-
-        if (elapsedTime >= duration) {
-          clearInterval(timer);
-          
-          const finalIndex = Math.floor(Math.random() * pool.length);
-          zhDisplay.textContent = pool[finalIndex].zh;
-          enDisplay.textContent = pool[finalIndex].en;
-
-          contentArea.classList.remove('rolling');
-          isRolling = false;
-        }
-      }, intervalTime);
-    }
-  </script>
-</body>
-</html>
+    // 1. Mini Adventure
