@@ -33,11 +33,11 @@
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      padding: 20px 28px 50px; /* 左右边距加大，增加两侧留白区域 */
+      padding: 20px 28px 50px;
       color: var(--main-color);
     }
 
-    /* 手机端容器（宽度微调以增加整体两侧白色区域） */
+    /* 手机端容器 */
     .mobile-container {
       width: 100%;
       max-width: 380px;
@@ -95,12 +95,12 @@
       position: relative;
     }
 
-    /* 三按钮容器（左右边距加宽） */
+    /* 三按钮容器（按钮间距缩窄） */
     .options-box {
-      padding: 18px 16px; /* 左右内边距更宽 */
+      padding: 18px 12px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;          /* 按钮间隔也更宽松 */
+      gap: 4px; /* 三个按钮之间的间距调小 */
     }
 
     /* 按钮样式与按压效果 */
@@ -113,7 +113,7 @@
       justify-content: flex-start;
       cursor: pointer;
       outline: none;
-      padding: 0 2px;     /* 按钮两侧内边距 */
+      padding: 0 1px;
       transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
@@ -121,12 +121,12 @@
       transform: scale(0.8); /* 按下变小 20% */
     }
 
-    /* PNG 图标放大 15% (从 65px 调整至 75px) */
+    /* PNG 图标（下边距缩窄，让字靠近图片） */
     .quest-btn-img {
       width: 75px;
       height: 75px;
       object-fit: contain;
-      margin-bottom: 8px;
+      margin-bottom: 2px; /* 调小边距，使下方文字贴近 PNG */
       display: block;
     }
 
@@ -161,7 +161,7 @@
       margin-bottom: 20px;
     }
 
-    /* 动态任务文本区域 */
+    /* 动态任务文本区域（左右边距调小） */
     .quest-content-area {
       width: 100%;
       display: flex;
@@ -169,7 +169,7 @@
       align-items: center;
       justify-content: center;
       flex-grow: 1;
-      padding: 0 30px;
+      padding: 0 18px; /* 左右边距稍微调小 */
       transition: opacity 0.1s ease;
     }
 
@@ -178,12 +178,12 @@
       opacity: 0.7;
     }
 
-    /* Quest 中文字体：Ma Shan Zheng，字号 12pt */
+    /* Quest 中文字体：Ma Shan Zheng，字号 14pt */
     .zh-text {
       font-family: 'Ma Shan Zheng', cursive, sans-serif;
       color: var(--accent-color);
-      font-size: 12pt; /* 从 24pt 改为 12pt */
-      line-height: 1.6;
+      font-size: 14pt; /* 更改为 14pt */
+      line-height: 1.5;
       margin-bottom: 12px;
       word-break: break-word;
     }
@@ -198,7 +198,7 @@
       word-break: break-word;
     }
 
-    /* 5. Instagram 按钮（完全保持不移动） */
+    /* 5. Instagram 按钮（完全保持不变） */
     .ig-badge-link {
       position: absolute;
       bottom: -30px;
