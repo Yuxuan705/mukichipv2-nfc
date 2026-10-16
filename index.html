@@ -5,24 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MUKICHIP V2: DAILY SOLVER - QUEST</title>
   
-  <!-- 引入 Google 字体: Bagel Fat One 与 Baloo Bhaijaan 2 -->
+  <!-- 引入 Google Fonts: Bagel Fat One 与 Baloo Bhaijaan 2 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Baloo+Bhaijaan+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Baloo+Bhaijaan+2:wght@400;600;800&display=swap" rel="stylesheet">
   
   <style>
-    /* 本地/自定义中文字体定义: 方正胖娃_GBK */
-    @font-face {
-      font-family: '方正胖娃_GBK';
-      src: local('方正胖娃_GBK'), local('FZPangWa-M18S');
-    }
-
-    /* CSS 变量配置 */
+    /* 全局变量设置 */
     :root {
-      --bg-color: #F8F6F3;        /* 指定背景色 */
-      --main-brown: #9B644F;      /* 指定主线条与字色 */
-      --quest-orange: #FCA125;    /* 指定任务文字配色 */
-      --card-bg: #FFFFFF;         /* 卡片背景纯白 */
+      --bg-color: #F8F6F3;        /* 背景颜色 */
+      --main-color: #9B644F;      /* 主线条与主字体颜色 */
+      --accent-color: #FCA125;    /* Quest 答案字颜色 */
+      --card-bg: #FFFFFF;         /* 卡片背景 */
     }
 
     * {
@@ -34,77 +28,80 @@
 
     body {
       background-color: var(--bg-color);
+      font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
       padding: 20px 16px 40px;
-      color: var(--main-brown);
-      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--main-color);
     }
 
-    /* 移动端容器 */
+    /* 手机端容器 */
     .mobile-container {
       width: 100%;
       max-width: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 16px;
     }
 
-    /* 1. 最顶部的插图区域 */
-    .top-illustration-wrap {
+    /* 1. 最顶部的画作与紧贴的圆角横线 */
+    .top-illustration-wrapper {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 10px;
     }
 
-    .top-illustration-wrap img {
-      max-width: 220px;
+    .top-illustration-img {
+      width: 100%;
+      max-width: 260px; /* 可根据你画作的比例自行调整大小 */
       height: auto;
       display: block;
     }
 
-    /* 插图正下方紧密粘着的横线 */
-    .attached-divider {
+    /* 紧密粘着在图画下面的横线（粗细与框一致，两端圆边） */
+    .top-tight-line {
       width: 100%;
-      height: 0;
-      border: none;
-      border-bottom: 3px solid var(--main-brown);
-      margin-top: 0;           /* 紧密贴合上图 */
-      margin-bottom: 18px;     /* 与下方标题拉开间距 */
+      height: 3px;
+      background-color: var(--main-color);
+      border-radius: 3px; /* 线的边为圆边 */
+      margin-top: 0;      /* 紧密粘着图画 */
     }
 
     /* 2. 主标题 */
     .main-title {
       font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 400;
-      color: var(--main-brown);
+      color: var(--main-color);
       text-align: center;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
+      letter-spacing: 0.05em; /* 字体间距 +50 */
+      margin-top: 2px;
+      margin-bottom: 2px;
     }
 
-    /* 通用圆角外框卡片 */
+    /* 3. 通用卡片外框 */
     .card-box {
       width: 100%;
       background: var(--card-bg);
-      border: 3px solid var(--main-brown);
+      border: 3px solid var(--main-color); /* 3px 粗线条 */
       border-radius: 24px;
       position: relative;
     }
 
-    /* 3. 三选一按钮框 */
+    /* 三按钮容器 */
     .options-box {
-      padding: 18px 12px;
+      padding: 18px 10px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-bottom: 16px;
     }
 
+    /* 按钮样式与按压效果 */
     .quest-btn {
       background: transparent;
       border: none;
@@ -114,36 +111,35 @@
       justify-content: flex-start;
       cursor: pointer;
       outline: none;
-      transition: transform 0.1s ease;
+      /* 按下时变小 20% (即 80%)，放开时流畅缩放复原 */
+      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .quest-btn:active {
-      transform: scale(0.92);
+      transform: scale(0.8); /* 变小 20% */
     }
 
-    /* 按钮里的图片容器 */
-    .btn-icon {
-      width: 52px;
-      height: 52px;
+    .quest-btn-img {
+      width: 65px;
+      height: 65px;
       object-fit: contain;
       margin-bottom: 8px;
       display: block;
     }
 
-    /* 按钮标题文字 */
     .quest-btn span {
       font-family: 'Bagel Fat One', cursive, sans-serif;
       font-size: 13px;
-      line-height: 1.15;
-      color: var(--main-brown);
+      color: var(--main-color);
       text-align: center;
-      font-weight: 400;
+      letter-spacing: 0.05em; /* 字体间距 +50 */
+      line-height: 1.2;
     }
 
-    /* 4. QUEST 展示卡片 */
+    /* 4. Quest 展示区 */
     .display-box {
       padding: 24px 20px 48px 20px;
-      min-height: 260px;
+      min-height: 280px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -152,13 +148,13 @@
 
     .quest-header-title {
       font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 20px;
-      color: var(--main-brown);
-      letter-spacing: 1px;
+      font-size: 22px;
+      color: var(--main-color);
+      letter-spacing: 0.05em; /* 字体间距 +50 */
       margin-bottom: 20px;
     }
 
-    /* 任务文本区域 */
+    /* 动态任务文本区域 */
     .quest-content-area {
       width: 100%;
       display: flex;
@@ -166,52 +162,51 @@
       align-items: center;
       justify-content: center;
       flex-grow: 1;
-      padding: 0 8px;
-      transition: filter 0.1s ease, transform 0.1s ease;
+      padding: 0 5px;
+      transition: opacity 0.1s ease;
     }
 
-    /* 滚轮动画状态 */
     .quest-content-area.rolling {
-      filter: blur(1.5px);
-      transform: scale(0.98);
+      filter: blur(1px);
+      opacity: 0.7;
     }
 
-    /* 任务中文字体: 方正胖娃_GBK */
+    /* Quest 中文字体设置 */
     .zh-text {
-      font-family: '方正胖娃_GBK', 'FZPangWa-M18S', 'Yuanti SC', 'PingFang SC', sans-serif;
-      color: var(--quest-orange);
-      font-size: 19px;
+      font-family: '方正胖娃_GBK', 'FZPangWa-M18S', system-ui, sans-serif;
+      color: var(--accent-color); /* #FCA125 */
+      font-size: 20px;
       line-height: 1.5;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       word-break: break-word;
     }
 
-    /* 任务英文字体: Baloo Bhaijaan 2 */
+    /* Quest 英文字体设置 */
     .en-text {
-      font-family: 'Baloo Bhaijaan 2', cursive, sans-serif;
-      color: var(--quest-orange);
+      font-family: 'Baloo Bhaijaan 2', 'Baloo Bhaijaan', cursive, sans-serif;
+      color: var(--accent-color); /* #FCA125 */
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 400;
       line-height: 1.35;
       word-break: break-word;
     }
 
-    /* 5. 右下角 Instagram 贴纸挂件按钮 */
+    /* 5. Instagram 按钮 */
     .ig-badge-link {
       position: absolute;
       bottom: -16px;
       right: -6px;
-      display: block;
+      text-decoration: none;
       z-index: 10;
       transition: transform 0.15s ease;
     }
 
-    .ig-badge-link:hover {
-      transform: scale(1.06) rotate(-2deg);
+    .ig-badge-link:active {
+      transform: scale(0.8); /* 按下时同样缩放 20% */
     }
 
-    .ig-badge-link img {
-      height: 42px;
+    .ig-btn-img {
+      height: 42px; /* 可根据你上传的 IG 图片比例自行调整 */
       width: auto;
       display: block;
     }
@@ -221,41 +216,44 @@
 
   <div class="mobile-container">
     
-    <!-- 1. 顶部手绘图案 + 紧密粘着的分割线 -->
-    <div class="top-illustration-wrap">
-      <!-- 提示: 替换 src 你的插图文件路径 (例如: top_muki.png) -->
-      <img src="top_muki.png" alt="Muki Illustration">
-      <hr class="attached-divider">
+    <!-- 1. 顶部图画 + 紧密粘着在下面的圆边横线 -->
+    <div class="top-illustration-wrapper">
+      <!-- 替换 src 为你画的图片 (例如: top-muki.png) -->
+      <img src="top-muki.png" alt="Muki Illustration" class="top-illustration-img" onerror="this.style.display='none'">
+      <!-- 下方紧密粘着的横线 -->
+      <div class="top-tight-line"></div>
     </div>
 
     <!-- 2. 主标题 -->
     <h1 class="main-title">MUKICHIP V2: DAILY SOLVER</h1>
 
-    <!-- 3. 三选一按钮框 -->
+    <!-- 3. 三按钮选框 -->
     <div class="card-box options-box">
+      
       <!-- 按钮 1: Mini Adventure -->
       <button class="quest-btn" onclick="selectQuest('mini')">
-        <!-- 提示: 替换你的 Mini Adventure 图标文件 -->
-        <img src="icon_mini_adventure.png" alt="Mini Adventure" class="btn-icon">
+        <!-- 替换 src 为你的图片 (例如: mini-icon.png) -->
+        <img src="mini-icon.png" alt="Mini Adventure" class="quest-btn-img">
         <span>Mini<br>Adventure</span>
       </button>
 
       <!-- 按钮 2: Inner Quest -->
       <button class="quest-btn" onclick="selectQuest('inner')">
-        <!-- 提示: 替换你的 Inner Quest 图标文件 -->
-        <img src="icon_inner_quest.png" alt="Inner Quest" class="btn-icon">
+        <!-- 替换 src 为你的图片 (例如: inner-icon.png) -->
+        <img src="inner-icon.png" alt="Inner Quest" class="quest-btn-img">
         <span>Inner<br>Quest</span>
       </button>
 
       <!-- 按钮 3: Random Quest -->
       <button class="quest-btn" onclick="selectQuest('random')">
-        <!-- 提示: 替换你的 Random Quest 图标文件 -->
-        <img src="icon_random_quest.png" alt="Random Quest" class="btn-icon">
+        <!-- 替换 src 为你的图片 (例如: random-icon.png) -->
+        <img src="random-icon.png" alt="Random Quest" class="quest-btn-img">
         <span>Random<br>Quest</span>
       </button>
+
     </div>
 
-    <!-- 4. QUEST 结果显示框 -->
+    <!-- 4. Quest 结果卡片 -->
     <div class="card-box display-box">
       <div class="quest-header-title">- QUEST -</div>
       
@@ -264,10 +262,10 @@
         <p class="en-text" id="enDisplay">Walk in one direction for 5 minutes within a safe public area, then return via the same path or a familiar route.</p>
       </div>
 
-      <!-- 5. 右下角 Instagram 贴纸按钮 -->
+      <!-- 5. 右下角 Instagram 图片按钮 -->
       <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="ig-badge-link">
-        <!-- 提示: 替换你的 @yuxuantsuki 按钮图片 -->
-        <img src="ig_badge.png" alt="@yuxuantsuki">
+        <!-- 替换 src 为你的 IG 按钮图片 (例如: ig-button.png) -->
+        <img src="ig-button.png" alt="@yuxuantsuki" class="ig-btn-img">
       </a>
     </div>
 
@@ -275,10 +273,10 @@
 
   <script>
     /* ========================================================
-       QUEST 数据库列表
+       QUEST 任务数据池（可自行填入 100 Mini + 100 Inner）
        ======================================================== */
     
-    // 1. Mini Adventure 任务库 (可自行添加/替换)
+    // 1. Mini Adventure 户外/探索类
     const miniQuests = [
       {
         zh: "在安全的公共区域选一个方向走 5 分钟，再按原路或熟悉路线回来。",
@@ -291,14 +289,10 @@
       {
         zh: "寻找一条马路上带有“小动物”或“植物”图案的盖板，拍照记录。",
         en: "Find a manhole cover or sign with an animal or plant design on the street and take a picture."
-      },
-      {
-        zh: "乘坐下一班到达的公交车，坐满 5 站后下车散步 10 分钟。",
-        en: "Take the next arriving bus, ride for 5 stops, then get off and take a 10-minute walk."
       }
     ];
 
-    // 2. Inner Quest 任务库 (可自行添加/替换)
+    // 2. Inner Quest 内心/治愈类
     const innerQuests = [
       {
         zh: "闭上眼睛深呼吸 5 次，在心中对自己说一句“你今天做得很好”。",
@@ -309,17 +303,13 @@
         en: "Send a quick message to a friend you haven't talked to in a while: 'Thinking of you, hope you have a great day!'"
       },
       {
-        zh: "找一个安静的地方，认真感受太阳晒在皮肤上 2 分钟的温度。",
-        en: "Find a quiet spot and quietly feel the warmth of the sun on your skin for 2 minutes."
-      },
-      {
         zh: "在备忘录里写下今天让你感到幸运或感谢的 3 件微小事物。",
         en: "Write down 3 tiny things in your notes that you felt lucky or grateful for today."
       }
     ];
 
     /* ========================================================
-       交互逻辑: 2秒滚轮抽签
+       2 秒滚轮抽签逻辑
        ======================================================== */
     let isRolling = false;
 
@@ -333,7 +323,7 @@
       } else if (type === 'inner') {
         pool = innerQuests;
       } else {
-        // Random Quest: 合并 miniQuests 和 innerQuests (共200项)
+        // Random Quest: 混合 Mini 与 Inner (共 200 个)
         pool = [...miniQuests, ...innerQuests];
       }
 
@@ -344,7 +334,7 @@
       contentArea.classList.add('rolling');
 
       const duration = 2000;    // 持续 2 秒
-      const intervalTime = 60; // 每 60ms 快速变动一次
+      const intervalTime = 60;  // 60ms 快速滚动更新
       let elapsedTime = 0;
 
       const timer = setInterval(() => {
@@ -357,7 +347,6 @@
         if (elapsedTime >= duration) {
           clearInterval(timer);
           
-          // 定格最终抽到的 Quest
           const finalIndex = Math.floor(Math.random() * pool.length);
           zhDisplay.textContent = pool[finalIndex].zh;
           enDisplay.textContent = pool[finalIndex].en;
