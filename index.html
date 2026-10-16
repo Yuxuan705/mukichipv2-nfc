@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MUKICHIP V2: DAILY SOLVER - QUEST</title>
   
-  <!-- 引入 Google Fonts: Bagel Fat One 与 Baloo Bhaijaan 2 -->
+  <!-- 引入 Google Fonts: Bagel Fat One, Baloo Bhaijaan 2 与 Ma Shan Zheng -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Baloo+Bhaijaan+2:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Baloo+Bhaijaan+2:wght@400;600;800&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
   
   <style>
-    /* 全局变量设置 */
+    /* 全局变量 */
     :root {
       --bg-color: #F8F6F3;        /* 背景颜色 */
       --main-color: #9B644F;      /* 主线条与主字体颜色 */
@@ -33,7 +33,7 @@
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      padding: 20px 16px 40px;
+      padding: 20px 16px 50px;
       color: var(--main-color);
     }
 
@@ -58,28 +58,30 @@
 
     .top-illustration-img {
       width: 100%;
-      max-width: 260px; /* 可根据你画作的比例自行调整大小 */
+      max-width: 260px;
       height: auto;
       display: block;
     }
 
-    /* 紧密粘着在图画下面的横线（粗细与框一致，两端圆边） */
+    /* 紧密粘着在图画下面的横线 */
     .top-tight-line {
       width: 100%;
       height: 3px;
       background-color: var(--main-color);
       border-radius: 3px; /* 线的边为圆边 */
-      margin-top: 0;      /* 紧密粘着图画 */
+      margin-top: 0;
     }
 
-    /* 2. 主标题 */
+    /* 2. 主标题：字更大且强行同一排 */
     .main-title {
       font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 20px;
+      font-size: clamp(16px, 5.2vw, 22px); /* 自动适应最大化字号 */
       font-weight: 400;
       color: var(--main-color);
       text-align: center;
       letter-spacing: 0.05em; /* 字体间距 +50 */
+      white-space: nowrap;    /* 必须同一排 */
+      width: 100%;
       margin-top: 2px;
       margin-bottom: 2px;
     }
@@ -95,10 +97,10 @@
 
     /* 三按钮容器 */
     .options-box {
-      padding: 18px 10px;
+      padding: 18px 8px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 6px;
     }
 
     /* 按钮样式与按压效果 */
@@ -111,12 +113,12 @@
       justify-content: flex-start;
       cursor: pointer;
       outline: none;
-      /* 按下时变小 20% (即 80%)，放开时流畅缩放复原 */
+      /* 点击时变小 20% (scale 0.8) */
       transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .quest-btn:active {
-      transform: scale(0.8); /* 变小 20% */
+      transform: scale(0.8);
     }
 
     .quest-btn-img {
@@ -127,34 +129,38 @@
       display: block;
     }
 
+    /* 按钮全大写 */
     .quest-btn span {
       font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--main-color);
       text-align: center;
       letter-spacing: 0.05em; /* 字体间距 +50 */
-      line-height: 1.2;
+      line-height: 1.25;
+      text-transform: uppercase; /* 强制大写 */
     }
 
     /* 4. Quest 展示区 */
     .display-box {
-      padding: 24px 20px 48px 20px;
-      min-height: 280px;
+      padding: 24px 15px 60px 15px;
+      min-height: 290px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
     }
 
+    /* - QUEST - 锁定同一排 */
     .quest-header-title {
       font-family: 'Bagel Fat One', cursive, sans-serif;
       font-size: 22px;
       color: var(--main-color);
       letter-spacing: 0.05em; /* 字体间距 +50 */
+      white-space: nowrap;    /* 必须同一排 */
       margin-bottom: 20px;
     }
 
-    /* 动态任务文本区域 */
+    /* 动态任务文本区域（左右边距加宽） */
     .quest-content-area {
       width: 100%;
       display: flex;
@@ -162,7 +168,7 @@
       align-items: center;
       justify-content: center;
       flex-grow: 1;
-      padding: 0 5px;
+      padding: 0 35px; /* 左右边距明显加宽 */
       transition: opacity 0.1s ease;
     }
 
@@ -171,17 +177,17 @@
       opacity: 0.7;
     }
 
-    /* Quest 中文字体设置 */
+    /* Quest 中文字体：Ma Shan Zheng */
     .zh-text {
-      font-family: '方正胖娃_GBK', 'FZPangWa-M18S', system-ui, sans-serif;
+      font-family: 'Ma Shan Zheng', cursive, sans-serif;
       color: var(--accent-color); /* #FCA125 */
-      font-size: 20px;
+      font-size: 24px;
       line-height: 1.5;
       margin-bottom: 12px;
       word-break: break-word;
     }
 
-    /* Quest 英文字体设置 */
+    /* Quest 英文字体：Baloo Bhaijaan Regular */
     .en-text {
       font-family: 'Baloo Bhaijaan 2', 'Baloo Bhaijaan', cursive, sans-serif;
       color: var(--accent-color); /* #FCA125 */
@@ -191,22 +197,22 @@
       word-break: break-word;
     }
 
-    /* 5. Instagram 按钮 */
+    /* 5. Instagram 按钮（放大 250%） */
     .ig-badge-link {
       position: absolute;
-      bottom: -16px;
-      right: -6px;
+      bottom: -30px; /* 适应放大后的位置 */
+      right: -10px;
       text-decoration: none;
       z-index: 10;
       transition: transform 0.15s ease;
     }
 
     .ig-badge-link:active {
-      transform: scale(0.8); /* 按下时同样缩放 20% */
+      transform: scale(0.8); /* 按下变小 20% */
     }
 
     .ig-btn-img {
-      height: 42px; /* 可根据你上传的 IG 图片比例自行调整 */
+      height: 105px; /* 放大 250% (原 42px * 2.5) */
       width: auto;
       display: block;
     }
@@ -216,39 +222,34 @@
 
   <div class="mobile-container">
     
-    <!-- 1. 顶部图画 + 紧密粘着在下面的圆边横线 -->
+    <!-- 1. 顶部图画 + 紧贴的圆边横线 -->
     <div class="top-illustration-wrapper">
-      <!-- 替换 src 为你画的图片 (例如: top-muki.png) -->
       <img src="top-muki.png" alt="Muki Illustration" class="top-illustration-img" onerror="this.style.display='none'">
-      <!-- 下方紧密粘着的横线 -->
       <div class="top-tight-line"></div>
     </div>
 
-    <!-- 2. 主标题 -->
+    <!-- 2. 主标题（同一排） -->
     <h1 class="main-title">MUKICHIP V2: DAILY SOLVER</h1>
 
-    <!-- 3. 三按钮选框 -->
+    <!-- 3. 三按钮选框（英文全大写） -->
     <div class="card-box options-box">
       
-      <!-- 按钮 1: Mini Adventure -->
+      <!-- 按钮 1: MINI ADVENTURE -->
       <button class="quest-btn" onclick="selectQuest('mini')">
-        <!-- 替换 src 为你的图片 (例如: mini-icon.png) -->
         <img src="mini-icon.png" alt="Mini Adventure" class="quest-btn-img">
-        <span>Mini<br>Adventure</span>
+        <span>MINI<br>ADVENTURE</span>
       </button>
 
-      <!-- 按钮 2: Inner Quest -->
+      <!-- 按钮 2: INNER QUEST -->
       <button class="quest-btn" onclick="selectQuest('inner')">
-        <!-- 替换 src 为你的图片 (例如: inner-icon.png) -->
         <img src="inner-icon.png" alt="Inner Quest" class="quest-btn-img">
-        <span>Inner<br>Quest</span>
+        <span>INNER<br>QUEST</span>
       </button>
 
-      <!-- 按钮 3: Random Quest -->
+      <!-- 按钮 3: RANDOM QUEST -->
       <button class="quest-btn" onclick="selectQuest('random')">
-        <!-- 替换 src 为你的图片 (例如: random-icon.png) -->
         <img src="random-icon.png" alt="Random Quest" class="quest-btn-img">
-        <span>Random<br>Quest</span>
+        <span>RANDOM<br>QUEST</span>
       </button>
 
     </div>
@@ -262,9 +263,8 @@
         <p class="en-text" id="enDisplay">Walk in one direction for 5 minutes within a safe public area, then return via the same path or a familiar route.</p>
       </div>
 
-      <!-- 5. 右下角 Instagram 图片按钮 -->
+      <!-- 5. 右下角 Instagram 图片按钮（放大250%） -->
       <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="ig-badge-link">
-        <!-- 替换 src 为你的 IG 按钮图片 (例如: ig-button.png) -->
         <img src="ig-button.png" alt="@yuxuantsuki" class="ig-btn-img">
       </a>
     </div>
@@ -273,7 +273,7 @@
 
   <script>
     /* ========================================================
-       QUEST 任务数据池（可自行填入 100 Mini + 100 Inner）
+       QUEST 任务数据池
        ======================================================== */
     
     // 1. Mini Adventure 户外/探索类
@@ -323,7 +323,7 @@
       } else if (type === 'inner') {
         pool = innerQuests;
       } else {
-        // Random Quest: 混合 Mini 与 Inner (共 200 个)
+        // Random Quest: 混合 Mini 与 Inner
         pool = [...miniQuests, ...innerQuests];
       }
 
@@ -333,8 +333,8 @@
 
       contentArea.classList.add('rolling');
 
-      const duration = 2000;    // 持续 2 秒
-      const intervalTime = 60;  // 60ms 快速滚动更新
+      const duration = 2000;    // 2秒
+      const intervalTime = 60;  // 60ms 快速轮播
       let elapsedTime = 0;
 
       const timer = setInterval(() => {
